@@ -10,6 +10,7 @@ import giphy_client
 from giphy_client.rest import ApiException
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
 
 # Creation du client Discord
@@ -25,13 +26,20 @@ client = discord.Client(intents=intents)
 chemin_fichier = "./messages.txt"
 chemin_fichier_tag_giphy = "./tag_giphy.txt"
 
+# Définit la date maximale (à partir de laquelle le programme devra s'arrêter de lui même)
+# ############################################
+maximal_date = datetime(2023, 6, 23)  # Remplacez avec votre date maximale
+
+#delay = (7 * 24 * 60 * 60)             # Délai entre 2 envois (ici 7 jours)
+delay = (30)             # Délai entre 2 envois (ici 7 jours)
+
 
 # Clés API, Channel ID de discord et Token Discord chargés depuis le fichier .env
 # ############################################
 load_dotenv()
 
 giphy_api_key = os.getenv('GIPHY_API_KEY')
-discord_channel_id = os.getenv('DISCORD_CHANNEL_ID')
+discord_channel_id = int(os.getenv('DISCORD_CHANNEL_ID'))   # On doit impérativement avoir un INT
 discord_TOKEN = os.getenv('DISCORD_TOKEN')
 
 
@@ -64,7 +72,6 @@ def choisir_message(messages_type):
     return random.choice(messages)
 
 
-
 # Fonction pour rechercher un GIF avec l'API GIPHY
 def rechercher_gif(requete):
     try:
@@ -91,36 +98,41 @@ def rechercher_gif(requete):
 
 # Fonction pour envoyer le message avec un GIF chaque semaine
 async def envoyer_message():
-    await client.wait_until_ready()
-    while not client.is_closed():
-        # Choix du message
-        message = choisir_message("discord")
+    while datetime.now() <= maximal_date:
+        await client.wait_until_ready()
+        while not client.is_closed():
+            # Choix du message
+            message = choisir_message("discord")
 
-        # Recherche d'un GIF aléatoire
-        gif_requete = choisir_message("giphy")
-        gif_url = rechercher_gif(gif_requete)
+            # Recherche d'un GIF aléatoire
+            gif_requete = choisir_message("giphy")
+            gif_url = rechercher_gif(gif_requete)
 
-        print("Image trouvée: ", gif_url)
+            print("Image trouvée: ", gif_url)
 
-        # Création de l'embed Discord
-        embed = discord.Embed(description=message)
-        embed.set_image(url=gif_url)
+            # Création de l'embed Discord
+            embed = discord.Embed(description=message)
+            embed.set_image(url=gif_url)
 
-        # Envoi du message au groupe Discord
-        channel = client.get_channel(discord_channel_id)
-        if channel:
-            try:
-                await channel.send(embed=embed)
-                print("Message envoyé au canal avec succès.")
-            except discord.HTTPException as e:
-                print("Erreur lors de l'envoi du message :", e)
-            except discord.Forbidden:
-                print("Permission refusée pour envoyer des messages dans le canal.")
-        else:
-            print("Impossible de trouver le canal avec l'ID :", discord_channel_id)
+            # Envoi du message au groupe Discord
+            channel = client.get_channel(discord_channel_id)
+            if channel:
+                try:
+                    await channel.send(embed=embed)
+                    print("Message envoyé au canal avec succès.")
+                except discord.HTTPException as e:
+                    print("Erreur lors de l'envoi du message :", e)
+                except discord.Forbidden:
+                    print("Permission refusée pour envoyer des messages dans le canal.")
+            else:
+                print("Impossible de trouver le canal avec l'ID :", discord_channel_id)
 
-        # Attente d'une semaine (7 jours)
-        await asyncio.sleep(10)
+            # Attente d'une semaine (7 jours)
+            await asyncio.sleep(delay)
+
+    # Une fois que la date maximale est atteinte, arrêter le programme
+    print("Date maximale atteinte. Arrêt du programme.")
+    await client.close()
 
 
 # Événement de démarrage du bot
