@@ -1,6 +1,6 @@
 discord
-random
+random2
 requests
 asyncio
 giphy_client
-dotenv
+python-dotenv

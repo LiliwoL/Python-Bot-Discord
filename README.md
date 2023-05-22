@@ -9,13 +9,23 @@ Développer un Bot Discord en Python pour rappeler chaque fin de semaine de publ
 Dépendances:
 
 ```bash
-pip install -m requirements.txt
+pip install -r requirements.txt
 ```
 
 Programme:
 ```bash
 python3 bot_discord.py
 ```
+
+# Configuration
+
+Créer le fichier **.env** avec vos valeurs.
+Dans le fichier **bot_discord.py**, configurer la date maximale d'envoi (= date de fin du stage) ainsi que la périodicité d'envoi.
+
+# Sources
+
+ChatGPT!
+https://www.commentcoder.com/bot-discord-python/
 
 
 # Utiliser des fichiers d'environnement dans Python
