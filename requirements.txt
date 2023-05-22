@@ -1,0 +1,6 @@
+discord
+random
+requests
+asyncio
+giphy_client
+dotenv
