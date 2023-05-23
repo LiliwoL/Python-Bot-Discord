@@ -20,7 +20,28 @@ python3 bot_discord.py
 # Configuration
 
 Créer le fichier **.env** avec vos valeurs.
-Dans le fichier **bot_discord.py**, configurer la date maximale d'envoi (= date de fin du stage) ainsi que la périodicité d'envoi.
+
+A configurer:
+```dotenv
+# Variables d'environnement à remplir avant!
+GIPHY_API_KEY=
+
+# Liste des IDs des salons séparés par des virgules et entre crochets
+DISCORD_CHANNEL_IDS="00000000,11111111"
+
+# Token de l'application
+DISCORD_TOKEN=
+
+# Date à laquelle le script ,du bot doit s'arrêter
+MAX_DATE_YEAR=
+# Ne pas mettre le 0 pour les mois avant octobre
+MAX_DATE_MONTH=
+MAX_DATE_DAY=
+
+# Délai entre 2 envois en secondes (ici 7 jours)
+#DELAY=604800     # "7 * 24 * 60 * 60"
+DELAY=
+```
 
 # Sources
 

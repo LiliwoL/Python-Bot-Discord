@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 # Imports nécessaires
@@ -12,42 +12,49 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
+# Chargement du fichier .env
+load_dotenv()
+
 
 # Creation du client Discord
 # ############################################
-intents = discord.Intents.default()
-intents.typing = False
-intents.presences = False
-client = discord.Client(intents=intents)
+intents                     = discord.Intents.default()
+intents.typing              = False
+intents.presences           = False
+client                      = discord.Client(intents=intents)
 
 
 # Chemins vers les fichiers textes contenant les messages à envoyer
 # ############################################
-chemin_fichier = "./messages.txt"
-chemin_fichier_tag_giphy = "./tag_giphy.txt"
+chemin_fichier              = "./messages.txt"
+chemin_fichier_tag_giphy    = "./tag_giphy.txt"
 
 # Définit la date maximale (à partir de laquelle le programme devra s'arrêter de lui même)
 # ############################################
-maximal_date = datetime(2023, 6, 23)  # Remplacez avec votre date maximale
+# Date définie dans le fichier .env
+max_date_year               = int(os.getenv('MAX_DATE_YEAR'))   # On doit impérativement avoir un INT
+max_date_month              = int(os.getenv('MAX_DATE_MONTH'))
+max_date_day                = int(os.getenv('MAX_DATE_DAY'))
+maximal_date                = datetime(max_date_year, max_date_month, max_date_day)  # Remplacez avec votre date maximale
 
-#delay = (7 * 24 * 60 * 60)             # Délai entre 2 envois (ici 7 jours)
-delay = (30)             # Délai entre 2 envois (ici 7 jours)
+
+# Délai entre 2 envois défini dans le fichier .env
+delay                       = float(os.getenv('DELAY'))
 
 
 # Clés API, Channel ID de discord et Token Discord chargés depuis le fichier .env
 # ############################################
-load_dotenv()
 
-giphy_api_key = os.getenv('GIPHY_API_KEY')
-discord_channel_id = int(os.getenv('DISCORD_CHANNEL_ID'))   # On doit impérativement avoir un INT
-discord_TOKEN = os.getenv('DISCORD_TOKEN')
+giphy_api_key               = os.getenv('GIPHY_API_KEY')
+discord_channel_ids         = os.getenv('DISCORD_CHANNEL_IDS').split(',')   # On doit impérativement avoir un dict contenant des ints
+discord_TOKEN               = os.getenv('DISCORD_TOKEN')
 
 
 # Configuration du client GIPHY
 # ############################################
-configuration = giphy_client.Configuration()
+configuration               = giphy_client.Configuration()
 configuration.api_key['api_key'] = giphy_api_key
-api_instance = giphy_client.DefaultApi(giphy_client.ApiClient(configuration))
+api_instance                = giphy_client.DefaultApi(giphy_client.ApiClient(configuration))
 
 
 # Fonction pour lire les messages à partir du fichier texte
@@ -98,6 +105,7 @@ def rechercher_gif(requete):
 
 # Fonction pour envoyer le message avec un GIF chaque semaine
 async def envoyer_message():
+    # Si la date maximale est atteinte, le programme s'arrête
     while datetime.now() <= maximal_date:
         await client.wait_until_ready()
         while not client.is_closed():
@@ -114,20 +122,22 @@ async def envoyer_message():
             embed = discord.Embed(description=message)
             embed.set_image(url=gif_url)
 
-            # Envoi du message au groupe Discord
-            channel = client.get_channel(discord_channel_id)
-            if channel:
-                try:
-                    await channel.send(embed=embed)
-                    print("Message envoyé au canal avec succès.")
-                except discord.HTTPException as e:
-                    print("Erreur lors de l'envoi du message :", e)
-                except discord.Forbidden:
-                    print("Permission refusée pour envoyer des messages dans le canal.")
-            else:
-                print("Impossible de trouver le canal avec l'ID :", discord_channel_id)
+            # Envoi du message aux groupes Discord
+            for channel_id in discord_channel_ids:
+                channel = client.get_channel( int(channel_id) )
+                # Votre code pour envoyer le message dans le channel spécifié
+                if channel:
+                    try:
+                        await channel.send(embed=embed)
+                        print("Message envoyé au canal avec succès.")
+                    except discord.HTTPException as e:
+                        print("Erreur lors de l'envoi du message :", e)
+                    except discord.Forbidden:
+                        print("Permission refusée pour envoyer des messages dans le canal.")
+                else:
+                    print("Impossible de trouver le canal avec l'ID :", channel_id)
 
-            # Attente d'une semaine (7 jours)
+            # Attente d'un délai avant le prochain envoi (durée définie dans le .env)
             await asyncio.sleep(delay)
 
     # Une fois que la date maximale est atteinte, arrêter le programme
