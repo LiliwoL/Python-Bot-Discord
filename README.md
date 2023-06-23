@@ -4,6 +4,11 @@
 
 Développer un Bot Discord en Python pour rappeler chaque fin de semaine de publier son rapport de stage.
 
+# @TODO:
+
+- améliorer la périodicité d'envoi (cron?)
+- Interface de gestion des messages?
+
 # Installation
 
 Dépendances:
