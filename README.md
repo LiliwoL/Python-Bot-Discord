@@ -64,3 +64,9 @@ https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-a
 # Créer un bot Discord
 
 - Se rendre sur https://discord.com/developers/applications pour créer un bot
+
+# Prompt utilisé sur ChatGPT pour la génération de messages
+
+```
+Rédige moi une liste de 30 messages contenant des emojis pour inciter des élèves en stage à penser à remplir leur rapport de stage hebdomadaire sur Moodle chaque fin de semaine. Tu dois avoir un ton rigolo mais rester pro. Les élèves doivent se sentir incités, motivés et encouragés. Les messages s'adressent à des étudiants en réseau informatique ou à des étudiants en développement. Les étudiants sont également des étudiantes.
+```
