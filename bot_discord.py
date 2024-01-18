@@ -29,6 +29,7 @@ client                      = discord.Client(intents=intents)
 chemin_fichier              = "./messages.txt"
 chemin_fichier_tag_giphy    = "./tag_giphy.txt"
 
+
 # Définit la date maximale (à partir de laquelle le programme devra s'arrêter de lui même)
 # ############################################
 # Date définie dans le fichier .env
@@ -74,7 +75,7 @@ def lire_messages(messages_type):
 # Fonction pour choisir un message aléatoire
 def choisir_message(messages_type):
 
-    # En fonction de ce qui est demandé, on appel la fonction de lecture
+    # En fonction de ce qui est demandé, on appelle la fonction de lecture
     messages = lire_messages(messages_type)
     return random.choice(messages)
 

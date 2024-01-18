@@ -26,6 +26,9 @@ python3 bot_discord.py
 
 Créer le fichier **.env** avec vos valeurs.
 
+Pour récupérer les IDs des salons:
+![](readme_docs/id_salon.png)
+
 A configurer:
 ```dotenv
 # Variables d'environnement à remplir avant!
@@ -57,3 +60,7 @@ https://www.commentcoder.com/bot-discord-python/
 # Utiliser des fichiers d'environnement dans Python
 
 https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1
+
+# Créer un bot Discord
+
+- Se rendre sur https://discord.com/developers/applications pour créer un bot
