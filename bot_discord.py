@@ -11,6 +11,7 @@ from giphy_client.rest import ApiException
 import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
+from pyfiglet import Figlet
 
 # Chargement du fichier .env
 load_dotenv()
@@ -22,6 +23,9 @@ intents                     = discord.Intents.default()
 intents.typing              = False
 intents.presences           = False
 client                      = discord.Client(intents=intents)
+
+# Font Figlet
+f = Figlet(font='standard')
 
 
 # Chemins vers les fichiers textes contenant les messages à envoyer
@@ -67,7 +71,7 @@ def lire_messages(messages_type):
     elif messages_type == "giphy":
         chemin = chemin_fichier_tag_giphy
 
-    with open(chemin, "r") as f:
+    with open(chemin, "r", encoding='utf-8') as f:
         messages = f.readlines()
     return [msg.strip() for msg in messages]
 
@@ -138,6 +142,14 @@ async def envoyer_message():
                 else:
                     print("Impossible de trouver le canal avec l'ID :", channel_id)
 
+            # Affichage du prochain lancement
+            # Calling the timedelta() function and
+            # adding 2 minutes and 10 seconds
+            current_time = datetime.now()
+            time_change = timedelta(seconds=delay)
+            next_time = current_time + time_change
+            print("Prochain message envoyé le: ", next_time)
+
             # Attente d'un délai avant le prochain envoi (durée définie dans le .env)
             await asyncio.sleep(delay)
 
@@ -149,6 +161,14 @@ async def envoyer_message():
 # Événement de démarrage du bot
 @client.event
 async def on_ready():
+    # Clearing the Screen
+    os.system('cls')
+
+    print('------')
+    print(f.renderText('BOT Discord'))
+    print(f.renderText('Stage SIO'))
+    print('------')
+    print('------')
     print('Bot connecté en tant que', client.user.name)
     print('------')
     client.loop.create_task(envoyer_message())

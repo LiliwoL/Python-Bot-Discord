@@ -17,7 +17,7 @@ Dépendances:
 pip install -r requirements.txt
 ```
 
-Programme:
+Lancement:
 ```bash
 python3 bot_discord.py
 ```
@@ -70,3 +70,9 @@ https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-a
 ```
 Rédige moi une liste de 30 messages contenant des emojis pour inciter des élèves en stage à penser à remplir leur rapport de stage hebdomadaire sur Moodle chaque fin de semaine. Tu dois avoir un ton rigolo mais rester pro. Les élèves doivent se sentir incités, motivés et encouragés. Les messages s'adressent à des étudiants en réseau informatique ou à des étudiants en développement. Les étudiants sont également des étudiantes.
 ```
+
+# Autorisations du bot sur le salon Discord
+
+Le bot doit être membre du salon et avoir le droit d'envoyer des messages
+
+![](readme_docs/0a9d1119.png)
