@@ -1,5 +1,7 @@
 # Bot Discord pour rappeler aux stagiaires de publier un rapport de stage hebdomadaire sur la plateforme Moodle
 
+![](readme_docs/5bb41ff0.png)
+
 # Objectif
 
 Développer un Bot Discord en Python pour rappeler chaque fin de semaine de publier son rapport de stage.
