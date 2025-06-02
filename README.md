@@ -70,7 +70,13 @@ https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-a
 # Prompt utilisé sur ChatGPT pour la génération de messages
 
 ```
-Rédige moi une liste de 30 messages contenant des emojis pour inciter des élèves en stage à penser à remplir leur rapport de stage hebdomadaire sur Moodle chaque fin de semaine. Tu dois avoir un ton rigolo mais rester pro. Les élèves doivent se sentir incités, motivés et encouragés. Les messages s'adressent à des étudiants en réseau informatique ou à des étudiants en développement. Les étudiants sont également des étudiantes.
+Rédige moi une liste de 30 messages contenant des emojis pour inciter des élèves en stage à penser à remplir leur rapport de stage hebdomadaire sur Moodle chaque fin de semaine. Tu dois avoir un ton rigolo mais rester pro. Les élèves doivent se sentir incités, motivés et encouragés. Les messages s'adressent à des étudiants en réseau informatique ou à des étudiants en développement. Les étudiants sont également des étudiantes. Tu ne dois pas ajouter de texte au début ni à la fin, et ne pas numéroter les lignes. Pas d'espace entre les lignes
+```
+
+# Prompt utilisé sur ChatGPT pour la génération de termes à utiliser sur giphy
+
+```
+Rédige moi une liste de 30 termes à utiliser pour rechercher des gifs funs sur la plateforme giphy. Ils doivent rappeler l'informatique, la pop culture, les memes. Ils doivent avoir un rapport avec la rédaction, le souvenir, l'urgence, le sérieux. La liste est sans texte avant ou après, pas d'espace entre chaque ligne
 ```
 
 # Autorisations du bot sur le salon Discord
